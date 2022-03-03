@@ -1,0 +1,25 @@
+type: code
+files:
+- name: main.go
+  visible: true
+  text: |-
+    package main
+
+    import (
+        "fmt"
+        "bufio"
+        "os"
+        "strconv"
+    )
+
+    func solve(s []string, i int) []string {
+        // put your code here
+        return yourSliceVariable
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/15942#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Thu, 03 Mar 2022 01:42:28 UTC
+record: -1

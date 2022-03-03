@@ -1,0 +1,114 @@
+<h2>Working with slices</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Today we continue our discussion about slices. In this topic, we will learn how to copy slices, how to append elements to a slice, and how we can use the <code class="language-go">range</code> keyword to iterate over a slice or an array. </p> 
+  <h5 style="text-align: center;">For range loop with an array and a slice</h5> 
+  <p>To begin with, consider we have a slice.</p> 
+  <pre><code class="language-go">var s = []int{0, 10, -3, 5, 99}</code></pre> 
+  <p>To iterate over a slice we can write this:</p> 
+  <pre><code class="language-go">for index := 0; index &lt; len(s); index++ {
+    // processing slice elements
+}</code></pre> 
+  <p>Now let's introduce the <code class="language-go">for range</code> loop:</p> 
+  <pre><code class="language-go">for index := range s {
+    // processing slice elements
+}</code></pre> 
+  <p>These two examples above are logically equal. But as you can see, with the help of the <code class="language-go">range</code> keyword, we end up writing less code and it becomes clearer. Furthermore, when using this keyword, you can obtain a copy of a slice element alongside its slice index:</p> 
+  <pre><code class="language-go">for index, element := range s {
+    // processing slice elements
+}</code></pre> 
+  <p>When you need only the copy of a slice element, use <code class="language-go">_</code> to indicate that you don't need the index. Otherwise, the Go compiler will throw you the <code class="language-go">declared but not used</code> error because of the unused index variable.</p> 
+  <pre><code class="language-go">for _, element := range s {
+    // processing slice elements
+}</code></pre> 
+  <p>It is important to understand that the assignment of a new value to a copied element will have no effect on the original one. Thus, the element you receive through the <code class="language-go">range</code> keyword is for read-only purposes:</p> 
+  <pre><code class="language-go">for _, element := range s {
+    element = newValue   // this assignment will have no effect 
+}                        // on the original slice element</code></pre> 
+  <p>If you want to change a slice element inside a loop, use its index:</p> 
+  <pre><code class="language-go">for index := range s {
+    s[index] = newValue
+}</code></pre> 
+  <h5 style="text-align: center;"> The copy function</h5> 
+  <p>In Go, we have a special built-in function used to copy slices – the <code class="language-go">copy</code> function. Its first argument is the destination, and the second one is the source. Excluding one special case, this function works only with slices.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   The special case we've mentioned is a string, and we'll discuss it in an upcoming topic.
+  </div>
+  <p></p> 
+  <p>In addition, the <code class="language-go">copy</code> function returns the number of copied elements. It will be the minimum of <code class="language-go">len(source)</code> and <code class="language-go">len(destination)</code>. Let's have a look at the following example:</p> 
+  <pre><code class="language-go">var s = []int{12, 23, 34}
+var sn = make([]int, len(s))
+
+var n = copy(sn, s)  // var n is the number of copied elements 
+
+sn[0] = 0            // Here, we assign a new value to the slice elements in order
+sn[1] = 11           // to see whether it is a proper copy or the same slice
+
+fmt.Println(n)       // 3
+fmt.Println(s)       // [12 23 34] - the initial slice with no changes
+fmt.Println(sn)      // [ 0 11 34] - the copied slice with modified elements</code></pre> 
+  <p>The <code class="language-go">copy</code> function was build in a way that it copies only available elements to available places. It means that if you copy a slice of length 3 to a slice of length 0, the function won't copy anything:</p> 
+  <pre><code class="language-go">var s = []int{12, 23, 34}
+var sn []int
+
+var n = copy(sn, s)
+
+fmt.Println(n)  // 0
+fmt.Println(sn) // []</code></pre> 
+  <p>If the number of copied elements is irrelevant, you can simply write:</p> 
+  <pre><code class="language-go">copy(sn, s)</code></pre> 
+  <h5 style="text-align: center;">The append function</h5> 
+  <p>The key feature of a slice is its variable size. In Go, we use a built-in function <code class="language-go">append</code> to extend slices by adding new elements to the end of one. The function's argument is a slice to which we want to add elements, followed by the elements themselves. The <code class="language-go">append</code> function returns a new extended slice that we should save. Here is an illustration of appending elements to a slice:</p> 
+  <pre><code class="language-go">var s = []int{12, 23, 34}
+s = append(s, 45)      // [12 23 34]
+s = append(s, 56, 67)  // [12 23 34 45]
+fmt.Println(s)         // [12 23 34 45 56 67]</code></pre> 
+  <p>After its first argument, the <code class="language-go">append</code> function can take any number of elements. We have a special syntax for breaking a slice into a series of function arguments:</p> 
+  <pre><code class="language-go">var s1 = []int{12, 23, 34}
+var s2 = []int{45, 56, 67}
+
+var s = append(s1, s2...) 
+// Like that, we can append one slice to another</code></pre> 
+  <p>These three dots after the <code class="language-go">s2</code> slice tell Go to break the <code class="language-go">s2</code> slice down to a series of arguments for the <code class="language-go">append</code> function. It is somewhat like doing the following:</p> 
+  <pre><code class="language-go">var s = append(s1, s2[0], s2[1], s2[2])</code></pre> 
+  <p>However, since the size of a slice can change after compilation, the three-dot notation is indispensable for appending one slice to another. What's more, the <code class="language-go">append</code> function can add elements even to a nil slice, thus initializing it:</p> 
+  <pre><code class="language-go">var s []int       // s is []
+s = append(s, 10) // s is [10]</code></pre> 
+  <h5 style="text-align: center;">Slice allocation and reallocation</h5> 
+  <p>In the example above, we first have a <code class="language-go">nil</code> slice with <code class="language-go">len</code> and <code class="language-go">cap</code> equal to 0. Clearly, we have no room for any new elements. In this case, the <code class="language-go">append</code> function will initialize a new backing array with a greater capacity and will copy the data from the old backing array to the new one.</p> 
+  <p></p>
+  <div class="alert alert-primary">
+   It is good practice to manually initialize a slice of such a capacity that would minimize the need for reallocation.
+  </div>
+  <p></p> 
+  <p>We can establish the capacity we need from the logic of a task:</p> 
+  <pre><code class="language-go">var a = []int{1, 2, 4, 3, 6}
+var b = []int{-1, 9, -90}
+
+// We want to join two slices, which means we already know
+// the capacity of the new slice: len(a)+len(b)
+
+var s = make([]int, 0, len(a)+len(b))
+s = append(s, a...)
+s = append(s, b...)</code></pre> 
+  <p>We can also assume how many elements we'll need. For instance, if we are working on some historical analysis of the world's countries, we can assume how many countries there were in the past and how many there are now, and create a slice of countries with an appropriate size:</p> 
+  <pre><code class="language-go">var countries  = make([]string, 0, 2000)</code></pre> 
+  <p>It is important to understand, besides, that if we use the length instead of the capacity, we declare a slice with elements of the default value. In such case, on calling the <code class="language-go">append</code> function, Go will reallocate the slice to increase its capacity:</p> 
+  <pre><code class="language-go">var countries  = make([]string, 2000)  // len: 2000, cap: 2000
+countries = append(countries, "Indonesia")
+
+fmt.Println("cap:", cap(countries))   // cap: 2560</code></pre> 
+  <p>On the other hand, if we assign values of the elements manually, using indexes within the slice range, no reallocation occurs:</p> 
+  <pre><code class="language-go">var countries  = make([]string, 2000) // len: 2000, cap: 2000
+for i := range countries {
+    countries[i] = "Indonesia"        // Here, we assign one and the same value for all 
+                                     // elements just to show you the slice behavior 
+}
+
+fmt.Println("cap:", cap(countries))   // cap: 2000</code></pre> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>Today we have covered two important slice functions – <code class="language-go">copy</code> and <code class="language-go">append</code>, and have learnt how to perform iterations over a slice or an array by using the <code class="language-go">for range</code> keywords. Now let's move on to the exercises to make sure all this information stays with us!</p>
+ </body>
+</html>

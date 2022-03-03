@@ -1,0 +1,78 @@
+<h2>Slices</h2>
+<html>
+ <head></head>
+ <body>
+  <p>Today, we are going to talk about slices. They are pretty similar to arrays, but we'll use slices more often than arrays because of their flexibility.</p> 
+  <h5 style="text-align: center;">Slice declaration</h5> 
+  <p>A slice declaration looks like an array declaration, but without specifying the size:</p> 
+  <pre><code class="language-go">var s []int</code></pre> 
+  <p>Since the size is not a part of the type, you can assign slices of different lengths to this <code class="language-go">s</code> slice variable:</p> 
+  <pre><code class="language-go">s = []int{0, 1, 3}
+s = []int{120, 56}
+s = []int{43, 42, 12, 12}</code></pre> 
+  <p>And just like with the arrays, you can retrieve items using <code class="language-go">[]</code>.</p> 
+  <pre><code class="language-go">s[0] = 20
+fmt.Println(s[0]) // Will print 20</code></pre> 
+  <p>The core difference between an array and a slice is that an array holds the data, whereas a slice holds a pointer to the array that holds the data. Just like with a pointer, the default value for a slice is <code class="language-go">nil</code>. Slices also exhibit pointer-like behavior when they are uninitialized.</p> 
+  <pre><code class="language-go">var s []int // Declared, but not initialized slice of integers;
+            // s is equal to nil
+
+s[0] = 10   // Panic: index out of range [0] with length 0</code></pre> 
+  <p>Like in the second part of the example above, you can manually assign a predefined slice to a slice variable. But what can you do if you need a slice of a thousand elements?</p> 
+  <h5 style="text-align: center;">Initialization</h5> 
+  <p>The <code class="language-go">make</code> function is here to save the day. Similar to the <code class="language-go">new</code> function, it can allocate and initialize a new slice variable. While the <code class="language-go">new</code> function only takes the type of object as its argument, the <code class="language-go">make</code> function takes a length variable as the second, and a capacity variable as the third argument (both should be of the integer type). The <code class="language-go">make</code> function returns a slice, not a pointer to a slice, since a slice is already a reference to the underlying array.</p> 
+  <pre><code class="language-go">var s []int
+s = make([]int, 6) // You can drop the capacity argument if you have no need for it;
+                   // In this case, cap will be equal to len</code></pre> 
+  <p>The length variable of the <code class="language-go">make</code> function represents how many elements with the default value will be created in the slice. It also specifies its size. The capacity variable, in turn, outlines how far we can extend our slice without re-allocating the underlying array.</p> 
+  <p>You can do slice extension via re-slicing <em>—</em> we will discuss it in an upcoming topic. Speaking of the length and the capacity of an array or a slice, you can get the first one with the help of the <code class="language-go">len</code> function, and the second one by using the <code class="language-go">cap</code> function:</p> 
+  <pre><code class="language-go">var length = len(s)
+var capacity = cap(s)</code></pre> 
+  <ul> 
+  </ul> 
+  <p><img alt="" height="600" name="2-1.png" src="https://ucarecdn.com/8069a95d-853a-495f-bcf6-9069e8369358/" width="1700"></p> 
+  <p>As you can probably see, an array and a slice are somewhat like a variable and a pointer, correspondingly:</p> 
+  <ul> 
+   <li>Both a slice and a pointer require initialization through a special built-in function;</li> 
+   <li>Both have <code class="language-go">nil</code> as the default value;</li> 
+   <li>Both contain not the data itself, but a reference to it.</li> 
+  </ul> 
+  <h5 style="text-align: center;">Making a multi-dimensional slice</h5> 
+  <p>The make function initializes only the root type. If you have a slice of slices, you need to initialize all the slice elements manually. In the example below, we initialize a 2D slice of integers with square sides of the length 10. No need to worry if you are not yet familiar with the <code class="language-go">for</code> and <code class="language-go">range</code> keywords. What we do here is iterate over the slice and initialize a sub-slice of the length 10 at each step of the iteration.</p> 
+  <pre><code class="language-go">var mds [][]int              // Declaring a 2D slice of integers
+
+mds = make([][]int, 10)      // Initializing the root slice
+
+for i := range mds {         // Looping over the root slice 
+    mds[i] = make([]int, 10) // and initializing all its slice elements
+}</code></pre> 
+  <p>If we had a 3D slice, we would need a second loop inside the first one. The first loop would initialize the <code class="language-go">[][]int</code> slice elements of the root <code class="language-go">[][][]int</code> slice, whereas the second one would initialize the <code class="language-go">[]int</code> slice elements of the <code class="language-go">[][]int</code> slices. Don't worry, we'll not ask you to do such initializations in the practice section. Just keep them in mind: it might come in handy later.</p> 
+  <h5 style="text-align: center;">Slice assignment</h5> 
+  <p>Earlier, we've mentioned similarities between a slice and a pointer. Let's look at another thing that they have in common. Imagine we have a slice. We naively create a new slice from the old one, and then we change several elements of our new slice:</p> 
+  <pre><code class="language-go">var s = []int{12, 23, 34}
+var sn = s
+
+sn[0] = 0
+sn[1] = 11</code></pre> 
+  <p>The thing is, the <code class="language-go">sn</code> slice here is not a proper copy of the <code class="language-go">s</code> slice. When you print both of them after these assignments, you'll see that they store identical elements:</p> 
+  <pre><code class="language-go">fmt.Println(s)  // [0 11 34]
+fmt.Println(sn) // [0 11 34]</code></pre> 
+  <p>As you may recall, a slice is a reference to an underlying array. When you declare and assign a new slice with the <code class="language-go">var sn = s</code> statement, you copy only the pointer, not the actual data. Thus, <code class="language-go">s[i]</code> and <code class="language-go">sn[i]</code> point to the same element within the same underlying array.</p> 
+  <p>On the other hand, if <code class="language-go">s</code> was an array, the <code class="language-go">var sn = s</code> statement would result in copying the data from <code class="language-go">s</code> to <code class="language-go">sn</code>, as we expected.</p> 
+  <pre><code class="language-go">var s = [3]int{12, 23, 34} // Here we simply specify the size 
+                           // to convert the slice into an array
+var sn = s
+
+sn[0] = 0
+sn[1] = 11
+
+fmt.Println(s)  // [12 23 34]
+fmt.Println(sn) // [ 0 11 34]</code></pre> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>Today we've picked up basic knowledge about slices. In particular, we've covered the following:</p> 
+  <ul> 
+   <li>How to declare and initialize a slice;</li> 
+   <li>How to work with its elements and with the slice itself.</li> 
+  </ul>
+ </body>
+</html>

@@ -1,0 +1,6 @@
+type: framework
+content:
+- The protocol
+- A secret that we share
+- Encrypt and decrypt
+current_task: 2

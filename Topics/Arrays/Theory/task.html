@@ -1,0 +1,106 @@
+<h2>Arrays</h2>
+<html>
+ <head></head>
+ <body>
+  <p style="text-align: right;"></p>
+  <p>Let's introduce ourselves to the most simple data structure in programming <em>—</em> an array. In this topic, we'll discuss it in terms of Go. In particular, we will cover how to create it and work with it.</p> 
+  <h5 style="text-align: center;">Array declaration</h5> 
+  <p>In the Go language, arrays are sequential collections of elements having the same data type. Arrays have a fixed number of elements. To declare an array, you need first to specify its size within <code class="language-go">[]</code> , and then the type of its elements, like here:</p> 
+  <pre><code class="language-go">var array [4]int</code></pre> 
+  <p>In the example above, we declare an array of integers with the size of 4 elements. After declaration, Go will populate it with elements having the default value for the given type. You can print our new array using the <code class="language-go">fmt.Print</code> function to see what's in it:</p> 
+  <pre><code class="language-go">fmt.Println(array) // Will print [0 0 0 0]</code></pre> 
+  <p>Zero is the default value for the <code class="language-go">int</code> type, thus our newly created array is filled with zeros.</p> 
+  <p>Please mind that you can use constants to specify the size of an array, but you cannot use variables: </p> 
+  <pre><code class="language-go">const s1 = 4
+var s2 = 4
+
+var a [s1]int // Will be ok
+var b [s2]int // Will throw a compilation error</code></pre> 
+  <h5 style="text-align: center;">Declaration and elements assignment</h5> 
+  <p>You can declare an array and assign values to its elements at once:</p> 
+  <pre><code class="language-go">var a = [4]int{10, 2, -2, 42}</code></pre> 
+  <p> If you don't specify values of all the elements, Go will set the missing ones to the default value, like it's shown here:</p> 
+  <pre><code class="language-go">var a = [4]int{10, 2}
+fmt.Println(a)  // Will print [10 2 0 0]</code></pre> 
+  <p>Also, you can declare an array and assign values to specific elements using the pair <code class="language-go">index: value</code>:</p> 
+  <pre><code class="language-go">var a = [4]int{0: 10, 3: 2}
+fmt.Println(a)  // Will print [10 0 0 2]</code></pre> 
+  <p>Keep in mind that if you have a multi-line assignment, you need to have a comma at the end of each line:</p> 
+  <pre><code class="language-go">var a = [4]int{
+    0: 10,
+    3: 2,   // Even at the last one
+}</code></pre> 
+  <h5 style="text-align: center;">Indexing</h5> 
+  <p>Now, let's have a look at how we can use arrays. First of all, we will need to access an element within an array. In order to do so, we should specify the name of the array, and then the index of the required element, within <code class="language-go">[]</code>. In Go, the first element starts with the index zero. To print the last <em>—</em> fourth in this case <em>—</em> element, we can write the following:</p> 
+  <pre><code class="language-go">var a = [4]int{10, 2, -2, 0}
+fmt.Println(a[3])</code></pre> 
+  <p> This <code class="language-go">a[3]</code> is equivalent to a normal variable. Hence, we can assign a new value to it:</p> 
+  <pre><code class="language-go">a[3] = 42
+fmt.Println(a) // Will print [10 2 -2 42]</code></pre> 
+  <p>Unlike declaration, indexing can use variables. Keep in mind, a Go program will panic if an index goes out of the array boundary during the runtime:</p> 
+  <pre><code class="language-go">var i = 3
+fmt.Println(a[i]) // Will print 42
+
+i++ // Incrementing i
+fmt.Println(a[i]) // Runtime error: index out of range [4] with length 4</code></pre> 
+  <p>Retrieving an element from an array using a variable as an index is one of the key features of an array. Later on, with the help of a loop, we will be able to perform bulk operations on arrays' elements. We don't need to think about it just yet, though: we will learn about it in one of the following topics.</p> 
+  <h5 style="text-align: center;">Array assignment</h5> 
+  <p>Array itself is a type, and it has two properties: size and type of elements. Consider the following example:</p> 
+  <pre><code class="language-go">var a = [4]int{1, 2, 3, 4}
+var b [3]int
+
+b = a  // Error: cannot use a (type [4]int) as type [3]int in assignment</code></pre> 
+  <p>This will throw a compile error. For us to be able to assign <code class="language-go">a</code> to <code class="language-go">b</code> , they should have the same <strong>size</strong> and the same <strong>type</strong> of elements, like here:</p> 
+  <pre><code class="language-go">var a = [4]int{1, 2, 3, 4}
+var b [4]int
+
+b = a          // Will be ok
+fmt.Println(b) // Will print [1 2 3 4]</code></pre> 
+  <h5 style="text-align: center;">Multidimensional arrays</h5> 
+  <p>As we've mentioned earlier, array itself is a type. Therefore, we can do the same trick again and create an array of arrays:</p> 
+  <pre><code class="language-go">var multiArray [3][4]int</code></pre> 
+  <p>This new multi-array will obey the same rules as a normal array. Here are some examples of how we can declare a multidimensional array and assign values to its elements:</p> 
+  <pre><code class="language-go">var a = [3][4]int{
+    {1, 2, 3, 4},
+    {5, 6, 7, 8},
+    {9, 10, 11, 12},
+}
+fmt.Println(a) // [[1 2 3 4] [5 6 7 8] [9 10 11 12]]
+
+var b = [3][4]int{
+    1: {
+        2: 5,
+	3: 6,
+    },
+} 
+fmt.Println(b) // [[0 0 0 0] [0 0 5 6] [0 0 0 0]]</code></pre> 
+  <p>If we try to get a value using index, we will get the inner array as a value:</p> 
+  <pre><code class="language-go">var va = a[1] // Will assign [5 6 7 8] to the va variable</code></pre> 
+  <p>We can again use an index to obtain the final value:</p> 
+  <pre><code class="language-go">var v = a[1][2] // Will assign 7 to the va variable</code></pre> 
+  <p>And now, just like with normal arrays, to assign one to another, their types need to match exactly. Consider these examples:</p> 
+  <pre><code class="language-go">var a [2][3]int
+var b [3][2]int
+
+a = b // ERROR
+
+var c [2][3]float32
+var d [2][3]int
+
+c = d // ERROR
+
+var e [2][3]string
+var f [2][3]string
+
+e = f // OK</code></pre> 
+  <h5 style="text-align: center;">Conclusion</h5> 
+  <p>Well done for making it here! Here's a summary of what we have learned today:</p> 
+  <ol> 
+   <li>What an array is</li> 
+   <li>How to declare and use it in Go</li> 
+   <li>Array as a type</li> 
+   <li>How to declare and use multidimensional arrays</li> 
+  </ol> 
+  <p>Arrays are great. But they have a fixed size, and they are not used in Go often. Most of the time we'll be working with slices – a more flexible analogue of arrays. We'll discuss them in the next topic.</p>
+ </body>
+</html>

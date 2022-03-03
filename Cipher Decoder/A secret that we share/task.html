@@ -1,0 +1,72 @@
+<h5 id="description">Description</h5>
+
+<p>In this stage, we need to find out what secret number Alice and Bob are trying to hide. We can reveal it through a series of computations. First, we need to find <span class="math-tex">\(B\)</span>. Pick a random natural number <span class="math-tex">\(b\)</span>, where <span class="math-tex">\(1 &lt; b &lt; p\)</span>:<br>
+<span class="math-tex">\[B=g^b\bmod p\]</span></p>
+
+<p>Although, we have a problem. Let's say <span class="math-tex">\(g = 3\)</span>, <span class="math-tex">\(b = 7\)</span>, <span class="math-tex">\(p = 23\)</span>.</p>
+
+<p>The first thought would be <span class="math-tex">\(g^b\bmod p=3^7\bmod 23 = 2187 \bmod 23 = 2\)</span>.</p>
+
+<p>In theory, this algorithm may work. But what if <span class="math-tex">\(g\)</span> and <span class="math-tex">\(b\)</span> both are <span class="math-tex">\(100\)</span>? Then, <span class="math-tex">\(g^b\)</span> is a number with more than two hundred digits. It won't be efficient. Python can handle it, but Golang will end up with the integer overflow. This is not the only problem. In real cryptography, the numbers are significantly more than 100.</p>
+
+<p>There is a more efficient algorithm. Suppose, <span class="math-tex">\(c = 1\)</span>, then:</p>
+
+<ol>
+	<li><span class="math-tex">\(c'=(c\cdot g)\bmod p\)</span></li>
+	<li><span class="math-tex">\(c''=(c'\cdot g)\bmod p\)</span></li>
+	<li><span class="math-tex">\(c'''=(c''\cdot g)\bmod p\)</span></li>
+	<li>...</li>
+</ol>
+
+<p>The number of steps must be equal to <span class="math-tex">\(b\)</span>.</p>
+
+<p>If <span class="math-tex">\(g = 3\)</span>, <span class="math-tex">\(b = 7\)</span>, <span class="math-tex">\(p = 23\)</span>, then:</p>
+
+<ol>
+	<li><span class="math-tex">\((1\cdot3) \bmod23=3\)</span></li>
+	<li><span class="math-tex">\((3\cdot 3) \bmod23=9\)</span></li>
+	<li><span class="math-tex">\((9\cdot3) \bmod23=4\)</span></li>
+	<li><span class="math-tex">\((4\cdot3) \bmod23=12\)</span></li>
+	<li><span class="math-tex">\((12\cdot3) \bmod23=13\)</span></li>
+	<li><span class="math-tex">\((13\cdot3) \bmod23=16\)</span></li>
+	<li><span class="math-tex">\((16\cdot3) \bmod23=2\)</span></li>
+</ol>
+
+<p>The answer is <span class="math-tex">\(2\)</span>, same as with the first method. There's a good article on Wikipedia that can shed some light if you're struggling with the concept: <a target="_blank" href="https://en.wikipedia.org/wiki/Modular_exponentiation" rel="noopener noreferrer nofollow">Modular exponentiation</a>.</p>
+
+<p>At this moment, you're lacking one number to compute the shared secret. It is <span class="math-tex">\(A\)</span>. Alice will send it to you.</p>
+
+<p>Compute the shared secret <span class="math-tex">\(s=A^b\bmod p\)</span>, then send <span class="math-tex">\(B\)</span> to Alice, so she can compute the shared secret, too.</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>At this stage, your program should:</p>
+
+<ul>
+	<li>Take <span class="math-tex">\(p\)</span> and <span class="math-tex">\(g\)</span> from the input;</li>
+	<li>Print <code class="java">OK</code>;</li>
+	<li>Compute <span class="math-tex">\(B\)</span>;</li>
+	<li>Take <span class="math-tex">\(A\)</span> from the input;</li>
+	<li>Compute the shared secret;</li>
+	<li>Print <code class="java">B is [B]</code>.</li>
+</ul>
+
+<h5 id="examples">Examples</h5>
+
+<p>&lt;&lt;Note: <code class="java">Alice:&gt;</code> is not part of the input and <code class="java">Bob:</code> is not part of your output.&gt;&gt;</p>
+
+<p><em>In this stage, the tests are acting as <code class="java">Alice</code>; your program is <code class="java">Bob</code>. Note that you don't need to output the names.</em></p>
+
+<p><strong>Example 1:</strong> <em>a = 21, b = 15</em></p>
+
+<pre><code class="language-no-highlight">Alice: g is 245 and p is 999
+Bob: OK
+Alice: A is 413
+Bob: B is 179</code></pre>
+
+<p><strong>Example 2:</strong> <em>a = 21, b = 15; different g and p</em></p>
+
+<pre><code class="language-no-highlight">Alice: g is 28 and p is 644
+Bob: OK
+Alice: A is 336
+Bob: B is 364</code></pre>

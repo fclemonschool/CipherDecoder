@@ -1,0 +1,115 @@
+<h5 id="description">Description</h5>
+
+<p>Let's head onto encryption. Messages will be encrypted with the <strong>Caesar cipher</strong>. The Caesar cipher is a very simple algorithm, not adapted to any kind of real-world application. We use it only for teaching purposes. Each letter of the alphabet is cyclically shifted down the alphabet by a certain number of positions. We can encrypt only letters; other characters will remain as they are. For example:</p>
+
+<p>The shared secret number is <span class="math-tex">\(4\)</span>, then we shift each letter down by four positions:</p>
+
+<table border="1" cellpadding="1" cellspacing="1" style="height: 95px; width: 886px;">
+	<tbody>
+		<tr>
+			<td><strong>Plain</strong></td>
+			<td>a</td>
+			<td>b</td>
+			<td>c</td>
+			<td>d</td>
+			<td>e</td>
+			<td>f</td>
+			<td>g</td>
+			<td>h</td>
+			<td>i</td>
+			<td>j</td>
+			<td>k</td>
+			<td>l</td>
+			<td>m</td>
+			<td>n</td>
+			<td>o</td>
+			<td>p</td>
+			<td>q</td>
+			<td>r</td>
+			<td>s</td>
+			<td>t</td>
+			<td>u</td>
+			<td>v</td>
+			<td>w</td>
+			<td>x</td>
+			<td>y</td>
+			<td>z</td>
+		</tr>
+		<tr>
+			<td><strong>Cipher</strong></td>
+			<td>e</td>
+			<td>f</td>
+			<td>g</td>
+			<td>h</td>
+			<td>i</td>
+			<td>j</td>
+			<td>k</td>
+			<td>l</td>
+			<td>m</td>
+			<td>n</td>
+			<td>o</td>
+			<td>p</td>
+			<td>q</td>
+			<td>r</td>
+			<td>s</td>
+			<td>t</td>
+			<td>u</td>
+			<td>v</td>
+			<td>w</td>
+			<td>x</td>
+			<td>y</td>
+			<td>z</td>
+			<td>a</td>
+			<td>b</td>
+			<td>c</td>
+			<td>d</td>
+		</tr>
+	</tbody>
+</table>
+
+<p>Plaintext: <code class="language-go">This is a message.</code></p>
+
+<p>Ciphertext: <code class="language-go">Xlmw mw e qiwweki.</code></p>
+
+<p>In this stage, you need to encrypt the message <code class="language-go">Will you marry me?</code> and send it to Alice. If her answer is <code class="language-go">Yeah, okay!</code>, encrypt <code class="language-go">Great!</code> and send it back. If Alice's answer is <code class="language-go">Let's be friends.</code>, encrypt and output <code class="language-go">What a pity!</code> Otherwise, don't print anything.</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>At this stage, your program should:</p>
+
+<ul>
+	<li>Take <span class="math-tex">\(p\)</span> and <span class="math-tex">\(g\)</span> from the input;</li>
+	<li>Print <code class="language-go">OK</code>;</li>
+	<li>Compute <span class="math-tex">\(B\)</span>;</li>
+	<li>Take <span class="math-tex">\(A\)</span> from the input;</li>
+	<li>Compute the shared secret;</li>
+	<li>Print <code class="language-go">B is [B]</code>;</li>
+	<li>Print the encrypted message <code class="language-go">Will you marry me?</code></li>
+	<li>If Alice's answer is <code class="language-go">Yeah, okay!</code>, encrypt <code class="language-go">Great!</code> and print it. If Alice's answer is <code class="language-go">Let's be friends.</code>, encrypt <code class="language-go">What a pity!</code> and output it.</li>
+</ul>
+
+<h5 id="examples">Examples</h5>
+
+<p>&lt;&lt;Note: <code class="language-go">Alice:&gt;</code> is not part of the input and <code class="language-go">Bob:</code> is not part of your output and don't print <code class="language-go">Alice got ...</code> and <code class="language-go">Bob got ...</code>.&gt;&gt;</p>
+
+<p><em>In this stage, the tests are acting as <code class="language-go">Alice</code>; your program is <code class="language-go">Bob</code>. Note that you don't need to output the names.</em></p>
+
+<p><strong>Example 1: </strong><em>success</em> </p>
+
+<pre><code class="language-go">Alice: g is 245 and p is 999
+Bob: OK
+Alice: A is 232
+Bob: B is 236
+Bob: Pbee rhn ftkkr fx?  // Will you marry me?
+Alice:&gt;Rxta, hdtr!  // Yeah, okay!
+Bob: Zkxtm!  // Great!</code></pre>
+
+<p><strong>Example 2: </strong><em>better luck next time</em> </p>
+
+<pre><code class="language-go">Alice: g is 245 and p is 999
+Bob: OK
+Alice: A is 232
+Bob: B is 236
+Bob: Pbee rhn ftkkr fx?  // Will you marry me?
+Alice: Exm'l ux ykbxgwl.  // Let's be friends.
+Bob: Patm t ibmr!  // What a pity!</code></pre>

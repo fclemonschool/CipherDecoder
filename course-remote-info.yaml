@@ -1,0 +1,90 @@
+hyperskill_project:
+  id: 236
+  ide_files: https://stepik.org/media/attachments/lesson/665345/additional_files.json
+  is_template_based: false
+  use_ide: true
+update_date: Wed, 02 Mar 2022 07:25:06 UTC
+stages:
+- id: 1185
+  step: 18313
+  is_completed: true
+- id: 1186
+  step: 18314
+  is_completed: false
+- id: 1187
+  step: 18315
+  is_completed: false
+topics:
+  0:
+  - title: Units of information
+    theory_id: 6865
+  - title: Introduction to operating systems
+    theory_id: 9704
+  - title: Introduction to Go
+    theory_id: 17073
+  - title: Comments
+    theory_id: 16689
+  - title: Variables and constants
+    theory_id: 14468
+  - title: Packages
+    theory_id: 15906
+  - title: Modules
+    theory_id: 15970
+  - title: Main (compiling and running)
+    theory_id: 16128
+  - title: Computer programming
+    theory_id: 8739
+  - title: Libraries
+    theory_id: 8504
+  - title: Paradigms
+    theory_id: 15860
+  - title: Documentation
+    theory_id: 12069
+  - title: Input/Output
+    theory_id: 14527
+  - title: Compilers and interpreters
+    theory_id: 13865
+  1:
+  - title: Binary numbers
+    theory_id: 5544
+  - title: Hexadecimal numbers
+    theory_id: 8788
+  - title: Computer algorithms
+    theory_id: 16547
+  - title: Pointers
+    theory_id: 15463
+  - title: Primitive types
+    theory_id: 16871
+  - title: Control statements
+    theory_id: 16235
+  - title: Loops
+    theory_id: 14707
+  - title: Arithmetic operations
+    theory_id: 16679
+  - title: Functions
+    theory_id: 16388
+  - title: Unicode
+    theory_id: 7899
+  - title: Strings
+    theory_id: 15412
+  - title: String formatting
+    theory_id: 16860
+  - title: Functions
+    theory_id: 13884
+  - title: Arithmetic expressions in programming
+    theory_id: 17289
+  2:
+  - title: The big O notation
+    theory_id: 16699
+  - title: Data structures
+    theory_id: 16927
+  - title: Pseudocode
+    theory_id: 15090
+  - title: Fixed-size array
+    theory_id: 7255
+  - title: Arrays
+    theory_id: 14871
+  - title: Slices
+    theory_id: 15656
+  - title: Working with slices
+    theory_id: 15935

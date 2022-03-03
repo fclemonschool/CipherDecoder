@@ -1,0 +1,50 @@
+<h5 id="description">Description</h5>
+
+<p>Cryptography is a good tool to keep your communication secret. One of the main issues of cryptography is how to send an encryption key to another person over an unsecured communication channel. The solution to it is the <strong>Diffie-Hellman key exchange protocol</strong>.</p>
+
+<p>In this project, we will tell you the story of Alice and Bob. They are fictional characters commonly used as placeholders in conversations on cryptographic systems and protocols. You will act as Bob, a guy who has an urge to communicate with Alice. </p>
+
+<p>The simplest implementation of the protocol is the following: </p>
+
+<ol>
+	<li>Alice and Bob agree to use the modulus <span class="math-tex">\(p = 23\)</span> and base <span class="math-tex">\(g = 5\)</span>. These numbers are no secret;</li>
+	<li>Alice chooses the secret integer <span class="math-tex">\(a = 4\)</span>, computes <span class="math-tex">\(A\)</span>, and sends it to Bob:<span class="math-tex">\[A=g^a\bmod p =5^4\bmod 23=4\]</span></li>
+	<li>Bob chooses the secret integer <span class="math-tex">\(b = 3\)</span>, computes <span class="math-tex">\(B\)</span>, and sends it to Alice:<span class="math-tex">\[B=g^b\bmod p =5^3\bmod 23=10\]</span></li>
+	<li>Alice computes: <span class="math-tex">\[S=B^a\bmod p =10^4\bmod 23=18\]</span></li>
+	<li>Bob computes<span class="math-tex">\[S=A^b\bmod p =4^3\bmod 23=18\]</span></li>
+	<li>Alice and Bob now share a secret number (<span class="math-tex">\(18\)</span>). They can use the shared secret to encrypt messages.</li>
+</ol>
+
+<p>Look at the math formula below. This is the main idea of the Diffie-Hellman protocol:<br>
+<span class="math-tex">\[(x^a)^b=(x^b)^a\]</span></p>
+
+<p>Let's now rewrite it:<br>
+<span class="math-tex">\[(g^a)^b=(g^b)^a\]</span></p>
+
+<p>Now, add the modulus:<br>
+<span class="math-tex">\[(g^a\bmod p)^b \bmod p = (g^b\bmod p)^a \bmod p\]</span></p>
+
+<p>If something is not clear in the Description, you can read the <a target="_blank" href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" rel="noopener noreferrer nofollow">wiki article</a> that explains the protocol.</p>
+
+<p>In this stage, Alice will tell you <span class="math-tex">\(g\)</span> and <span class="math-tex">\(p\)</span>. You are going to need them in later stages.</p>
+
+<h5 id="objectives">Objectives</h5>
+
+<p>In this stage, your program should:</p>
+
+<ul>
+	<li>Read a string from the input;</li>
+	<li>Get <em><span class="math-tex">\(p\)</span></em><strong> </strong>and<strong> </strong><em><span class="math-tex">\(g\)</span></em> from the string;</li>
+	<li>Print <code class="java">OK</code>.</li>
+</ul>
+
+<h5 id="example">Example</h5>
+
+<p>&lt;&lt;Note: <code class="java">Alice:&gt;</code> is not part of the input and <code class="java">Bob:</code> is not part of your output. In this case, your program should print <code class="java">OK</code> instead of <code class="java">Bob: OK</code>.&gt;&gt;</p>
+
+<p><em>In this stage, the tests are acting as <code class="java">Alice</code>; your program is <code class="java">Bob</code>. Note that you don't need to output the names, just take a string from the input and output <code class="java">OK</code>.</em></p>
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code class="java">Alice: g is 245 and p is 999
+Bob: OK</code></pre>

@@ -1,0 +1,21 @@
+type: code
+files:
+- name: main.go
+  visible: true
+  text: |-
+    package main
+
+    import "fmt"
+
+    func createArray() any {
+        array = ?  // modify only this line
+
+        return array
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/learn/step/14877#comment
+status: Solved
+feedback:
+  message: <html>Correct solution</html>
+  time: Wed, 02 Mar 2022 07:24:37 UTC
+record: -1
